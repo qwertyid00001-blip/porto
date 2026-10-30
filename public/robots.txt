@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aan-portfolio.dev/sitemap.xml
+

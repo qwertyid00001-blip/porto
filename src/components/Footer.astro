@@ -1,0 +1,46 @@
+---
+import { portfolioData } from '../data/portfolio';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-surface-border bg-surface-bg py-12 relative">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Logo & Short Pitch -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-surface-card border border-surface-border flex items-center justify-center text-brand-lime font-mono font-bold">
+          ⚡
+        </div>
+        <div>
+          <span data-bind="name" class="text-white font-extrabold text-sm">{portfolioData.personal.name}</span>
+          <p class="text-xs text-surface-muted">Web Developer — Desain Tajam, Performa Nyata</p>
+        </div>
+      </div>
+
+      <!-- Social / Professional Links -->
+      <div class="flex items-center gap-6 text-sm text-surface-muted font-medium">
+        <a href={portfolioData.contact.github} data-bind="github" target="_blank" rel="noopener noreferrer" class="hover:text-brand-lime transition-colors">
+          GitHub
+        </a>
+        <a href={portfolioData.contact.linkedin} data-bind="linkedin" target="_blank" rel="noopener noreferrer" class="hover:text-brand-lime transition-colors">
+          LinkedIn
+        </a>
+        <a href={`mailto:${portfolioData.contact.email}`} data-bind="email-link" class="hover:text-brand-lime transition-colors">
+          Email
+        </a>
+        <a href="#main-content" class="hover:text-brand-lime transition-colors flex items-center gap-1">
+          <span>Ke Atas ↑</span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="mt-8 pt-8 border-t border-surface-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-surface-muted">
+      <p>© {currentYear} {portfolioData.personal.name}. Seluruh hak cipta dilindungi.</p>
+      <p class="font-mono text-[11px]">Dibangun dengan Astro & Tailwind CSS // 100% Speed</p>
+    </div>
+  </div>
+</footer>
+

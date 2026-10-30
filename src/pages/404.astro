@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="404 — Halaman Tidak Ditemukan">
+  <Navbar />
+  <main id="main-content" class="flex-1 flex items-center justify-center py-24 px-4 text-center">
+    <div class="max-w-md mx-auto">
+      <div class="text-7xl sm:text-8xl font-black font-mono text-brand-lime mb-4 text-glow">
+        404
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+        Halaman Tidak Ditemukan
+      </h1>
+      <p class="text-sm text-surface-muted mb-8 leading-relaxed">
+        Halaman yang Anda tuju mungkin sudah dipindahkan atau URL yang dimasukkan salah. Silakan kembali ke beranda portofolio.
+      </p>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-extrabold text-xs uppercase tracking-wider transition-all shadow-glow-lime"
+      >
+        <span>← Kembali ke Beranda</span>
+      </a>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+

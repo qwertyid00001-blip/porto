@@ -1,0 +1,314 @@
+PRD WEBSITE PORTOFOLIO WEB DEVELOPER
+Tanggal: 30 Oktober 2026
+(Ganti [Nama] di seluruh dokumen ini dengan nama kamu.)
+
+======================================================================
+1. RINGKASAN DAN TUJUAN
+======================================================================
+
+Website ini adalah satu halaman portofolio yang membuat calon client yakin menyewa kamu sebagai web developer dalam waktu kurang dari 60 detik, meskipun kamu belum punya riwayat kerja formal. Karena belum ada pengalaman kerja yang bisa ditunjukkan, bukti utamanya adalah dua hal: kualitas website ini sendiri dan studi kasus proyek yang dijelaskan dengan jujur.
+
+Tujuan produk:
+- Mendapat 3 sampai 5 pesan masuk dari calon client per bulan dalam 3 bulan pertama setelah peluncuran (asumsi awal, bisa diubah).
+- Tampil dengan kualitas visual dan detail setara studio atau agensi internasional.
+- Mencapai skor Lighthouse 95 ke atas di mobile.
+- Menjadi satu link utama untuk LinkedIn, GitHub, Fastwork, Upwork, dan bio media sosial.
+
+Bukan tujuan (fase 1):
+- Blog, toko online, atau sistem login.
+- CMS atau panel admin. Konten cukup diubah lewat kode.
+
+Pemilik produk: kamu sendiri, sebagai desainer, developer, dan penulis konten sekaligus.
+
+======================================================================
+2. TARGET AUDIENS DAN PERSONA
+======================================================================
+
+Website ini dirancang untuk empat tipe client, dengan prioritas utama pemilik bisnis kecil dan founder startup karena merekalah yang paling sering menyewa developer pemula.
+
+a) Pemilik UMKM atau bisnis lokal
+   Kebutuhan: website toko, jasa, atau company profile dengan tombol WhatsApp.
+   Yang dicari: contoh hasil yang rapi, harga jelas, proses sederhana.
+   Pemicu menghubungi: melihat proyek serupa dengan bisnisnya.
+
+b) Founder atau product manager startup
+   Kebutuhan: landing page, MVP, atau perbaikan web yang ada.
+   Yang dicari: studi kasus dengan masalah, solusi, dan hasil terukur.
+   Pemicu menghubungi: terlihat paham produk, bukan hanya tampilan.
+
+c) Agensi atau studio kecil
+   Kebutuhan: freelancer tambahan untuk development.
+   Yang dicari: kode rapi di GitHub, stack modern, kecepatan kerja.
+   Pemicu menghubungi: kualitas teknis dan komunikasi.
+
+d) Client internasional (Upwork, LinkedIn)
+   Kebutuhan: developer andal dengan harga kompetitif.
+   Yang dicari: tampilan profesional, bahasa Inggris, zona waktu jelas.
+   Pemicu menghubungi: kepercayaan di 30 detik pertama.
+
+Perilaku yang diasumsikan: client membuka dari HP, melihat 30 sampai 60 detik, lalu memutuskan lanjut atau keluar. Maka bagian atas halaman harus langsung menjawab tiga hal: kamu siapa, apa yang bisa kamu buat, dan bagaimana menghubungimu.
+
+======================================================================
+3. POSITIONING DAN VALUE PROPOSITION
+======================================================================
+
+Kamu tidak menjual "pengalaman bertahun-tahun", kamu menjual hasil yang cepat, rapi, dan komunikasi yang jelas. Positioning ini membuat belum adanya riwayat kerja menjadi tidak relevan, karena yang dinilai client adalah bukti di depan mata.
+
+Pernyataan positioning:
+"[Nama] adalah web developer yang membantu bisnis kecil dan startup punya website yang cepat, rapi, dan mudah dipakai pelanggan, dengan proses kerja yang transparan dari awal sampai peluncuran."
+
+Tiga pilar nilai:
+1. Desain yang tajam. Tampilan bersih dan modern, bukan template generik.
+2. Performa nyata. Website cepat di HP dan lolos Core Web Vitals.
+3. Komunikasi jelas. Update rutin, harga dan jadwal di awal, revisi terukur.
+
+Cara menutup celah "belum punya pengalaman":
+- Tampilkan 3 sampai 4 studi kasus konsep atau proyek pribadi, dilabeli jujur sebagai proyek pribadi atau proyek konsep.
+- Jelaskan proses kerja dalam 4 langkah (brief, desain, build, peluncuran) agar client merasa aman.
+- Cantumkan paket layanan dengan ruang lingkup dan estimasi waktu yang jelas.
+- Tawarkan 1 sampai 2 proyek awal dengan harga khusus, lalu minta testimoni tertulis sebagai pengganti riwayat kerja.
+- Tautkan kode di GitHub dan demo live di setiap proyek.
+
+Opsi headline hero (pilih satu):
+- "Saya membangun website yang membuat bisnismu terlihat serius."
+- "Web developer untuk bisnis yang ingin cepat online, tanpa ribet."
+- "Desain rapi, kode bersih, hasil yang bisa kamu lihat."
+
+======================================================================
+4. RUANG LINGKUP
+======================================================================
+
+Fase 1 hanya mencakup satu halaman utama dan dua halaman detail studi kasus, agar bisa selesai dalam sekitar 4 minggu dengan kualitas tinggi.
+
+Fase 1 (wajib)
+  Termasuk: halaman utama satu halaman dengan 6 section, 2 halaman detail studi kasus, form kontak dan tombol WhatsApp, responsif penuh, SEO dasar, analytics, deploy dengan domain.
+  Tidak termasuk: blog, CMS, login, multi bahasa.
+
+Fase 2 (opsional)
+  Termasuk: versi bahasa Inggris, mode terang dan gelap, bagian testimoni setelah ada client, 2 sampai 4 studi kasus tambahan.
+  Tidak termasuk: toko online, fitur booking.
+
+Fase 3 (nanti)
+  Termasuk: blog atau catatan teknis, halaman harga detail, kalkulator estimasi proyek.
+  Tidak termasuk: aplikasi web kompleks.
+
+Keputusan yang perlu kamu konfirmasi:
+- Bahasa utama: Indonesia untuk client lokal, atau Inggris untuk client internasional? Rekomendasi: mulai dari Indonesia, siapkan struktur teks agar versi Inggris mudah ditambahkan di fase 2.
+- Kontak utama: WhatsApp (cepat untuk client lokal) atau email (lebih formal untuk client internasional). Rekomendasi: sediakan keduanya.
+
+======================================================================
+5. STRUKTUR HALAMAN DAN SPESIFIKASI SECTION
+======================================================================
+
+Halaman utama terdiri dari 6 section berurutan, dengan proyek diletakkan tepat setelah hero karena itu yang paling ingin dilihat client.
+
+1) Header
+   Tujuan: navigasi cepat.
+   Isi wajib: logo atau nama, menu (Proyek, Layanan, Tentang, Kontak), tombol "Hubungi Saya" yang selalu terlihat.
+
+2) Hero
+   Tujuan: menjawab "siapa dan apa yang ditawarkan" dalam 5 detik.
+   Isi wajib: headline besar, satu kalimat pendukung, 2 tombol (Lihat Proyek, Hubungi Saya), status ketersediaan (misal "Menerima proyek baru"), foto atau elemen visual khas.
+
+3) Proyek pilihan
+   Tujuan: bukti kemampuan.
+   Isi wajib: 3 sampai 4 kartu proyek besar berisi gambar, judul, satu kalimat masalah, tag teknologi, link demo dan GitHub, tombol "Baca studi kasus" untuk 2 proyek terbaik.
+
+4) Layanan
+   Tujuan: client tahu apa yang bisa dibeli.
+   Isi wajib: 3 paket (Landing page, Company profile, Web aplikasi) berisi isi paket, estimasi waktu, dan harga mulai dari (opsional).
+
+5) Tentang dan proses
+   Tujuan: membangun kepercayaan.
+   Isi wajib: foto, cerita singkat 3 sampai 4 kalimat, daftar teknologi, proses kerja 4 langkah.
+
+6) Kontak dan footer
+   Tujuan: mengubah pengunjung jadi pesan masuk.
+   Isi wajib: form (nama, email, kebutuhan, anggaran), tombol WhatsApp, email, LinkedIn, GitHub.
+
+Kebutuhan fungsional:
+FR-1. Menu menggulir halus ke section yang dituju dan menandai section aktif.
+FR-2. Tombol "Hubungi Saya" tersedia di header dan tetap terlihat saat scroll.
+FR-3. Form kontak memvalidasi isian, menampilkan status berhasil atau gagal, dan melindungi dari spam (honeypot atau CAPTCHA ringan).
+FR-4. Tombol WhatsApp membuka chat dengan pesan awal yang sudah terisi.
+FR-5. Setiap kartu proyek memiliki tautan demo live dan repositori GitHub yang dibuka di tab baru.
+FR-6. Halaman studi kasus memakai template yang sama (lihat bagian 7) dan punya tombol kembali ke daftar proyek.
+FR-7. Semua teks, gambar, dan link proyek disimpan di satu file data agar mudah diperbarui tanpa mengubah desain.
+FR-8. Halaman 404 khusus dengan tautan kembali ke beranda.
+
+======================================================================
+6. ARAHAN DESAIN (STANDAR AGENSI INTERNASIONAL)
+======================================================================
+
+Desain setara agensi bukan soal banyak animasi, tetapi soal disiplin: tipografi besar dan tegas, ruang kosong yang lega, satu warna aksen, dan detail kecil yang konsisten di setiap elemen. Semua nilai di bawah adalah titik awal yang bisa kamu sesuaikan, selama tetap konsisten.
+
+Prinsip desain:
+- Tipografi sebagai elemen utama. Heading besar dan berani, teks isi nyaman dibaca.
+- Ruang kosong lega. Padding section 96 sampai 160 px di desktop, 64 sampai 80 px di HP.
+- Satu warna aksen. Sisanya netral, agar mata client langsung tertuju ke proyek dan tombol kontak.
+- Motion berfungsi. Animasi hanya untuk memandu perhatian, bukan hiasan.
+- Konten asli. Tanpa foto stok dan tanpa teks placeholder.
+
+Spesifikasi visual (titik awal):
+- Tipografi: dua keluarga font, satu untuk heading (contoh: Space Grotesk, Instrument Serif, atau Inter Tight), satu untuk isi (contoh: Inter). Di-host sendiri agar cepat.
+- Skala teks: hero clamp(3rem, 8vw, 7.5rem), H2 clamp(2rem, 4vw, 3.5rem), isi 16 sampai 18 px, tinggi baris 1,5 sampai 1,6. Maksimal 65 karakter per baris.
+- Warna: gaya gelap dengan latar #0A0A0A, teks #F5F5F0, teks sekunder #A1A1A1, garis #262626, satu aksen (contoh #C6FF3D atau #4F46E5). Kontras teks minimal 4,5:1.
+- Grid dan jarak: kontainer maksimal 1280 px, 12 kolom, gutter 24 px. Skala jarak kelipatan 8 px (8, 16, 24, 32, 48, 64, 96, 128).
+- Komponen: tombol dengan radius konsisten, kartu proyek berbingkai tipis, tag teknologi berbentuk pil, ikon satu keluarga (misal Lucide).
+- Gambar proyek: mockup di dalam bingkai browser dan HP, resolusi tinggi, format WebP atau AVIF. Opsional: video loop 5 sampai 8 detik tanpa suara.
+- Motion: durasi 200 sampai 600 ms, easing cubic-bezier(0.22, 1, 0.36, 1). Efek: fade dan naik halus saat scroll, hover kartu proyek, kursor atau tombol magnetik (opsional). Wajib menghormati prefers-reduced-motion.
+- Responsif: desain mobile-first. Breakpoint 360, 768, 1024, dan 1440 px. Tombol sentuh minimal 44 px.
+
+Cara mencapai kualitas agensi:
+1. Kumpulkan 10 sampai 15 referensi di Awwwards, Godly, Land-book, atau Dribbble, lalu tulis apa yang membuat masing-masing terasa premium (tipografi, jarak, atau motion). Pelajari prinsipnya, jangan menyalin.
+2. Buat wireframe dulu, lalu desain UI di Figma untuk desktop dan mobile sebelum menulis kode.
+3. Tetapkan design token (warna, font, jarak) sebelum mulai, supaya konsisten.
+4. Poles detail: state hover, fokus, dan loading di setiap elemen interaktif.
+5. Minta 2 sampai 3 orang yang mewakili client meninjau, lalu perbaiki.
+
+Hindari:
+- Template Bootstrap atau tema bawaan tanpa penyesuaian.
+- Gradient ungu generik, bayangan berlebihan, dan banyak warna aksen.
+- Animasi berat yang membuat halaman lambat atau mual.
+- Terlalu banyak font, ukuran, dan gaya tombol berbeda.
+
+======================================================================
+7. STUDI KASUS DAN PANDUAN KONTEN
+======================================================================
+
+Karena belum ada riwayat kerja, studi kasus adalah konten terpenting di website ini. Siapkan 3 sampai 4 proyek, dengan 2 yang terbaik dibuatkan halaman detail.
+
+Proyek yang disarankan dibuat:
+- Landing page bisnis lokal (kafe atau jasa, versi konsep). Menunjukkan desain visual, responsif, konversi. Fitur kunci: menu atau layanan interaktif, tombol pesan WhatsApp.
+- Company profile perusahaan fiktif. Menunjukkan struktur informasi, branding. Fitur kunci: multi halaman, form kontak, SEO dasar.
+- Aplikasi web kecil (dashboard, kalkulator, atau tracker). Menunjukkan logika, state, API. Fitur kunci: data dinamis, filter, penyimpanan lokal.
+- Redesign website nyata yang buruk (sebagai latihan). Menunjukkan analisis masalah dan perbaikan. Fitur kunci: perbandingan sebelum dan sesudah, skor performa.
+
+Setiap proyek wajib dilabeli jujur sebagai proyek pribadi atau proyek konsep. Kejujuran justru meningkatkan kepercayaan client.
+
+Template halaman studi kasus:
+
+    # [Nama Proyek]
+    Label: Proyek pribadi | Peran: Desain dan development | Durasi: 2 minggu
+    Teknologi: [daftar teknologi]
+    Link: [Demo live] [Kode GitHub]
+
+    ## Ringkasan
+    Satu paragraf: proyek apa, untuk siapa, hasil akhirnya.
+
+    ## Masalah
+    Apa yang ingin diselesaikan? Siapa penggunanya?
+
+    ## Pendekatan
+    Keputusan desain dan teknis yang kamu ambil, dan alasannya.
+
+    ## Proses
+    Wireframe, desain Figma, tantangan yang dihadapi dan cara mengatasinya.
+
+    ## Hasil
+    Fitur akhir, skor Lighthouse, waktu muat, responsivitas.
+
+    ## Yang dipelajari
+    Satu atau dua hal yang akan kamu lakukan berbeda.
+
+Panduan penulisan:
+- Gaya bahasa singkat, langsung, dan hangat. Hindari jargon yang tidak dipahami client non-teknis.
+- Setiap klaim sebaiknya punya bukti: angka, tautan demo, atau tangkapan layar.
+- Foto profil asli dengan pencahayaan baik dan latar sederhana.
+- Bagian "Tentang" ditulis dari sudut pandang manfaat untuk client, bukan daftar riwayat hidup.
+- Siapkan teks pendek untuk meta deskripsi (maksimal 160 karakter) dan gambar pratinjau sosial (1200 x 630 px).
+
+======================================================================
+8. KEBUTUHAN NON-FUNGSIONAL
+======================================================================
+
+Website portofolio seorang developer dinilai juga dari kecepatan dan kerapian teknisnya, jadi target di bawah bersifat wajib, bukan pilihan.
+
+- Performa
+  Target: Lighthouse 95 ke atas di mobile, LCP maksimal 2,5 detik, INP maksimal 200 ms, CLS maksimal 0,1.
+  Cara: gambar WebP atau AVIF dengan ukuran responsif, lazy loading, font di-host sendiri, JavaScript seminimal mungkin.
+
+- Ukuran halaman
+  Target: muatan awal sebaiknya di bawah 1 MB.
+  Cara: kompres gambar, tunda video dan animasi berat.
+
+- Aksesibilitas
+  Target: memenuhi WCAG 2.2 level AA.
+  Cara: kontras 4,5:1, navigasi keyboard penuh, indikator fokus jelas, teks alternatif gambar, dukungan prefers-reduced-motion.
+
+- SEO
+  Target: muncul saat nama atau "web developer + kota" dicari.
+  Cara: judul dan meta deskripsi unik, heading berurutan, data terstruktur Person, sitemap.xml, robots.txt, gambar Open Graph.
+
+- Responsif
+  Target: tampil sempurna dari 360 sampai 1920 px.
+  Cara: desain mobile-first, uji di perangkat nyata.
+
+- Kompatibilitas
+  Target: dua versi terbaru Chrome, Safari, Firefox, dan Edge.
+  Cara: uji lintas browser sebelum rilis.
+
+- Keamanan dan privasi
+  Target: HTTPS, form bebas spam, tidak ada data sensitif di kode.
+  Cara: sertifikat dari hosting, honeypot atau CAPTCHA ringan, analytics ramah privasi.
+
+- Keterpantauan
+  Target: tahu berapa pengunjung dan dari mana.
+  Cara: analytics ringan (Plausible, Umami, atau Cloudflare Web Analytics), lacak klik tombol kontak.
+
+======================================================================
+9. TECH STACK DAN HOSTING
+======================================================================
+
+Pilih stack yang paling kamu kuasai, karena kecepatan dan kerapian hasil akhir lebih penting daripada teknologi yang sedang tren. Rekomendasi di bawah cocok untuk situs statis yang cepat.
+
+- Framework: Astro (situs statis cepat, JavaScript minimal). Alternatif: Next.js jika kamu sudah mahir React, atau HTML, CSS, dan JavaScript murni.
+- Styling: Tailwind CSS dengan design token sendiri. Alternatif: CSS Modules atau CSS murni.
+- Animasi: GSAP atau Motion untuk animasi scroll dan transisi. Alternatif: CSS animation untuk efek sederhana.
+- Smooth scroll: Lenis (opsional, pastikan tetap aksesibel). Alternatif: scroll bawaan browser.
+- Desain: Figma untuk wireframe dan UI. Alternatif: Penpot.
+- Form kontak: Formspree, Web3Forms, atau Resend. Alternatif: endpoint serverless buatan sendiri.
+- Hosting: Vercel, Netlify, atau Cloudflare Pages (tersedia paket gratis). Alternatif: GitHub Pages.
+- Domain: .dev, .id, atau .com dengan nama kamu. Alternatif: subdomain gratis dari hosting untuk tahap awal.
+- Analytics: Plausible, Umami, atau Cloudflare Web Analytics. Alternatif: Google Analytics.
+- Kontrol versi: Git dan GitHub, repo publik berisi README yang rapi.
+
+Catatan: ketersediaan dan batas paket gratis tiap layanan bisa berubah, jadi cek halaman resminya sebelum memilih.
+
+======================================================================
+10. METRIK, ROADMAP, RISIKO, DAN PELUNCURAN
+======================================================================
+
+Proyek ini dianggap berhasil jika website selesai dalam sekitar 4 minggu, memenuhi target performa, dan mulai menghasilkan pesan masuk dari calon client.
+
+Metrik keberhasilan:
+- Pesan masuk dari calon client: 3 sampai 5 per bulan setelah bulan ke-3 (asumsi). Diukur dari form, WhatsApp, dan email.
+- Klik tombol "Hubungi Saya": minimal 5% dari pengunjung. Diukur dari analytics.
+- Skor Lighthouse mobile: 95 ke atas di semua kategori. Diukur dengan Lighthouse atau PageSpeed Insights.
+- Waktu di halaman: lebih dari 60 detik rata-rata. Diukur dari analytics.
+- Klik ke demo dan GitHub proyek: dipantau, naik tiap bulan. Diukur dengan event tracking.
+
+Roadmap (sekitar 4 minggu):
+1. Minggu 1, riset dan konten. Kumpulkan referensi, putuskan positioning dan headline, tulis teks, siapkan 3 sampai 4 proyek beserta tangkapan layar. Selesai jika semua teks dan aset siap.
+2. Minggu 2, desain. Wireframe, design token, dan UI Figma desktop serta mobile. Selesai jika desain sudah ditinjau 2 sampai 3 orang.
+3. Minggu 3, development. Bangun halaman, komponen, animasi, form, dan halaman studi kasus. Selesai jika semua section berfungsi di HP dan desktop.
+4. Minggu 4, QA dan peluncuran. Uji performa, aksesibilitas, lintas browser, SEO, lalu deploy dan sambungkan domain. Selesai jika checklist di bawah tercentang.
+5. Setelah rilis. Pasang link di LinkedIn, GitHub, dan platform freelance, tinjau analytics tiap bulan, dan tambah satu studi kasus baru tiap 1 sampai 2 bulan.
+
+Risiko:
+- Terlalu lama memoles desain. Dampak: peluncuran mundur. Pencegahan: tetapkan batas waktu per minggu, rilis versi 1 lalu perbaiki.
+- Proyek contoh terlihat tidak meyakinkan. Dampak: client ragu. Pencegahan: kurangi jumlah, perbaiki kualitas 3 proyek terbaik.
+- Animasi berat memperlambat halaman. Dampak: skor turun, client pergi. Pencegahan: uji performa tiap minggu, gunakan animasi ringan.
+- Tidak ada trafik ke website. Dampak: tidak ada pesan masuk. Pencegahan: bagikan di LinkedIn, platform freelance, dan hubungi bisnis lokal secara langsung.
+- Mengaku punya pengalaman yang tidak ada. Dampak: kehilangan kepercayaan. Pencegahan: label proyek jujur, fokus pada bukti dan proses.
+
+Checklist peluncuran:
+[ ] Semua teks sudah dibaca ulang, tanpa salah ketik dan tanpa placeholder
+[ ] Setiap proyek punya demo live yang berfungsi dan repositori GitHub rapi
+[ ] Form kontak dan tombol WhatsApp sudah diuji dari HP
+[ ] Skor Lighthouse mobile 95 ke atas
+[ ] Diuji di Chrome, Safari, Firefox, dan Edge, serta minimal satu HP asli
+[ ] Navigasi keyboard dan kontras warna sudah diperiksa
+[ ] Judul, meta deskripsi, gambar pratinjau sosial, sitemap, dan robots.txt sudah terpasang
+[ ] Analytics aktif dan HTTPS berjalan
+[ ] Link website sudah dipasang di LinkedIn, GitHub, dan profil freelance

@@ -1,0 +1,224 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { portfolioData, type Project } from '../../data/portfolio';
+
+export function getStaticPaths() {
+  const caseStudyProjects = portfolioData.projects.filter((p) => p.hasCaseStudy && p.caseStudy);
+  return caseStudyProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { caseStudy } = project;
+
+if (!caseStudy) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout
+  title={`Studi Kasus: ${project.title} — ${portfolioData.personal.name}`}
+  description={project.summary}
+>
+  <Navbar />
+
+  <main id="main-content" class="flex-1 py-12 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Back Navigation Button (FR-6) -->
+      <div class="mb-10">
+        <a
+          href="/#projects"
+          class="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-surface-muted hover:text-brand-lime transition-colors group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Kembali ke Daftar Proyek</span>
+        </a>
+      </div>
+
+      <!-- Case Study Header / Meta Card -->
+      <header class="mb-12">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3 py-1 rounded-full bg-brand-lime/10 border border-brand-lime/30 text-brand-lime font-mono text-xs font-bold uppercase tracking-wider">
+            {project.badge}
+          </span>
+          <span class="text-xs text-surface-muted font-mono">
+            Kategori: {project.category}
+          </span>
+          <span class="text-xs text-surface-muted font-mono">
+            Durasi: {project.duration}
+          </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+          {project.title}
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
+          {project.summary}
+        </p>
+
+        <!-- Tech Stack & Live Links -->
+        <div class="p-5 rounded-2xl bg-surface-card border border-surface-border flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-mono text-surface-muted uppercase mr-1">Teknologi:</span>
+            {project.technologies.map((tech) => (
+              <span class="px-2.5 py-1 rounded-lg bg-surface-card-subtle border border-surface-border text-xs font-mono text-brand-lime">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-extrabold text-xs uppercase tracking-wider transition-all shadow-glow-lime"
+            >
+              <span>Demo Live</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+              </svg>
+            </a>
+
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-card-subtle hover:bg-surface-border text-white border border-surface-border font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              <span>Kode GitHub</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m10 15 5-3-5-3v6Z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Featured Image Mockup -->
+      <div class="mb-14 rounded-3xl overflow-hidden border border-surface-border shadow-2xl">
+        <img
+          src={project.coverImage}
+          alt={`Visual utama untuk ${project.title}`}
+          class="w-full h-auto max-h-[480px] object-cover"
+        />
+      </div>
+
+      <!-- Structured Case Study Sections according to PRD Template -->
+      <div class="space-y-12">
+        
+        <!-- Masalah -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <h2 class="text-xl sm:text-2xl font-bold text-brand-lime mb-4 flex items-center gap-2">
+            <span>01. Masalah yang Ingin Diselesaikan</span>
+          </h2>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+            {project.problem}
+          </p>
+        </section>
+
+        <!-- Pendekatan -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <h2 class="text-xl sm:text-2xl font-bold text-brand-lime mb-4 flex items-center gap-2">
+            <span>02. Pendekatan & Solusi Teknis</span>
+          </h2>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+            {caseStudy.approach}
+          </p>
+        </section>
+
+        <!-- Proses & Tantangan -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <h2 class="text-xl sm:text-2xl font-bold text-brand-lime mb-6 flex items-center gap-2">
+            <span>03. Proses Pengerjaan</span>
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {caseStudy.process.map((p, idx) => (
+              <div class="p-5 rounded-2xl bg-surface-card-subtle border border-surface-border">
+                <span class="text-xs font-mono font-bold text-brand-lime/60 block mb-1">
+                  Tahap {idx + 1}
+                </span>
+                <h3 class="text-base font-bold text-white mb-2">{p.step}</h3>
+                <p class="text-xs text-surface-muted leading-relaxed">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Hasil Terukur (Metrics) -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-surface-card to-surface-card-subtle border border-brand-lime/40 shadow-glow-lime">
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <span>04. Hasil Terukur & Metrik Performa</span>
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {caseStudy.results.map((res) => (
+              <div class="text-center p-4 rounded-xl bg-surface-bg border border-surface-border">
+                <div class="text-2xl sm:text-3xl font-black font-mono text-brand-lime mb-1">
+                  {res.metric}
+                </div>
+                <div class="text-[11px] text-surface-muted font-medium">
+                  {res.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Yang Dipelajari -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <h2 class="text-xl sm:text-2xl font-bold text-brand-lime mb-4 flex items-center gap-2">
+            <span>05. Yang Dipelajari (Key Learnings)</span>
+          </h2>
+          <ul class="space-y-3">
+            {caseStudy.learned.map((point) => (
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <span class="text-brand-lime font-bold">→</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+      </div>
+
+      <!-- Bottom Navigation / Call to Action -->
+      <div class="mt-16 pt-10 border-t border-surface-border flex flex-col sm:flex-row items-center justify-between gap-6">
+        <a
+          href="/#projects"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-surface-muted hover:text-white"
+        >
+          <span>← Kembali ke Semua Proyek</span>
+        </a>
+
+        <a
+          href="/#contact"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-extrabold text-xs uppercase tracking-wider transition-all shadow-glow-lime"
+        >
+          <span>Diskusikan Proyek Serupa</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+

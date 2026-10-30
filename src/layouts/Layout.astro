@@ -1,0 +1,231 @@
+---
+import '../styles/global.css';
+import { portfolioData } from '../data/portfolio';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = `${portfolioData.personal.name} — ${portfolioData.personal.role}`,
+  description = portfolioData.personal.subheadline,
+  ogImage = '/images/og-preview.jpg',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://aan-portfolio.dev');
+
+// Person Schema JSON-LD for SEO
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: portfolioData.personal.name,
+  jobTitle: portfolioData.personal.role,
+  url: canonicalURL.toString(),
+  sameAs: [
+    portfolioData.contact.github,
+    portfolioData.contact.linkedin,
+  ],
+  knowsAbout: [
+    'Web Development',
+    'Frontend Development',
+    'Astro',
+    'Tailwind CSS',
+    'TypeScript',
+    'React',
+    'Next.js',
+    'SEO & Performance Optimization'
+  ],
+  description: portfolioData.personal.subheadline,
+};
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    <!-- Client-Side Config Hydrator & Admin Shortcut -->
+    <script is:inline>
+      (function() {
+        function applyOverrides() {
+          try {
+            const raw = localStorage.getItem('porto_custom_config');
+            if (raw) {
+              const data = JSON.parse(raw);
+              if (data.github) {
+                document.querySelectorAll('[data-bind="github"]').forEach(el => el.setAttribute('href', data.github));
+              }
+              if (data.linkedin) {
+                document.querySelectorAll('[data-bind="linkedin"]').forEach(el => el.setAttribute('href', data.linkedin));
+              }
+              if (data.email) {
+                document.querySelectorAll('[data-bind="email-link"]').forEach(el => el.setAttribute('href', 'mailto:' + data.email));
+                document.querySelectorAll('[data-bind="email-text"]').forEach(el => el.textContent = data.email);
+              }
+              if (data.whatsappNumber) {
+                const msg = data.whatsappPrefilledMessage || 'Halo, saya tertarik berdiskusi tentang website.';
+                const url = 'https://wa.me/' + data.whatsappNumber + '?text=' + encodeURIComponent(msg);
+                document.querySelectorAll('[data-bind="wa-link"]').forEach(el => el.setAttribute('href', url));
+                document.querySelectorAll('[data-bind="wa-number"]').forEach(el => el.textContent = data.whatsappNumber);
+              }
+              if (data.name) {
+                document.querySelectorAll('[data-bind="name"]').forEach(el => el.textContent = data.name);
+              }
+              if (data.headline) {
+                document.querySelectorAll('[data-bind="headline"]').forEach(el => el.textContent = data.headline);
+              }
+              if (data.availability) {
+                document.querySelectorAll('[data-bind="availability"]').forEach(el => el.textContent = data.availability);
+              }
+            }
+
+            // Hydrate custom projects if added via /admin
+            const projectsRaw = localStorage.getItem('porto_custom_projects');
+            const grid = document.getElementById('projects-grid');
+            if (projectsRaw && grid) {
+              const projects = JSON.parse(projectsRaw);
+              if (Array.isArray(projects) && projects.length > 0) {
+                grid.innerHTML = projects.map(p => `
+                  <article class="group rounded-3xl bg-surface-card border border-surface-border hover:border-brand-lime/60 transition-all duration-300 flex flex-col overflow-hidden shadow-lg hover:-translate-y-2">
+                    <div class="relative h-56 w-full overflow-hidden bg-surface-card-subtle">
+                      <img
+                        src="${p.coverImage || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'}"
+                        alt="Tangkapan layar ${p.title}"
+                        loading="lazy"
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent opacity-80"></div>
+                      <div class="absolute top-4 left-4">
+                        <span class="px-3 py-1 rounded-full bg-surface-bg/90 backdrop-blur-md border border-brand-lime/40 text-brand-lime font-mono text-[10px] font-bold uppercase tracking-wider">
+                          ${p.badge || 'Proyek'}
+                        </span>
+                      </div>
+                      <div class="absolute top-4 right-4">
+                        <span class="px-2.5 py-1 rounded-full bg-surface-card/80 backdrop-blur-md text-surface-muted text-[10px] font-mono">
+                          ${p.duration || 'Selesai'}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div class="text-[11px] font-mono text-brand-lime uppercase tracking-wider font-semibold mb-1">
+                          ${p.category || 'Web Development'}
+                        </div>
+                        <h3 class="text-xl font-extrabold text-white mb-2 group-hover:text-brand-lime transition-colors">
+                          ${p.title}
+                        </h3>
+                        <p class="text-xs text-surface-muted leading-relaxed mb-4 line-clamp-3">
+                          <strong class="text-slate-300">Masalah / Hasil:</strong> ${p.problem || p.summary || ''}
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 mb-6">
+                          ${(Array.isArray(p.technologies) ? p.technologies : (p.technologies || '').split(',').map(s => s.trim())).filter(Boolean).map(tech => `
+                            <span class="px-2.5 py-1 rounded-md bg-surface-card-subtle border border-surface-border text-[10px] font-mono text-slate-300">
+                              ${tech}
+                            </span>
+                          `).join('')}
+                        </div>
+                      </div>
+                      <div class="pt-4 border-t border-surface-border flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                          ${p.liveUrl ? `
+                            <a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-white hover:text-brand-lime flex items-center gap-1 transition-colors">
+                              <span>Demo</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline></svg>
+                            </a>
+                          ` : ''}
+                          ${p.githubUrl ? `
+                            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-surface-muted hover:text-white flex items-center gap-1 transition-colors">
+                              <span>GitHub</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m10 15 5-3-5-3v6Z"></path></svg>
+                            </a>
+                          ` : ''}
+                        </div>
+                        ${p.hasCaseStudy && p.slug ? `
+                          <a href="/projects/${p.slug}" class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-lime hover:underline">
+                            <span>Studi Kasus</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                          </a>
+                        ` : ''}
+                      </div>
+                    </div>
+                  </article>
+                `).join('');
+              }
+            }
+          } catch (e) {
+            console.error('Error applying overrides:', e);
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyOverrides);
+        } else {
+          applyOverrides();
+        }
+
+        // Secret keyboard shortcut: Ctrl+Shift+S or Cmd+Shift+S to open /admin
+        window.addEventListener('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'S' || e.key === 's')) {
+            e.preventDefault();
+            window.location.href = '/admin';
+          }
+        });
+      })();
+    </script>
+  </head>
+  <body class="bg-surface-bg text-surface-light antialiased selection:bg-brand-lime selection:text-surface-bg min-h-screen flex flex-col relative overflow-x-hidden">
+    <!-- Skip to main content for accessibility (WCAG 2.2 AA) -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-lime focus:text-surface-bg focus:font-bold focus:rounded-lg focus:outline-none"
+    >
+      Loncat ke Konten Utama
+    </a>
+
+    <!-- Subtle Background Ambient Light Glow -->
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+      <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-blue-600/10 blur-[140px] rounded-full"></div>
+      <div class="absolute top-[40%] right-[-10%] w-[600px] h-[600px] bg-brand-lime/5 blur-[160px] rounded-full"></div>
+      <div class="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-blue-700/10 blur-[150px] rounded-full"></div>
+    </div>
+
+    <slot />
+  </body>
+</html>
+

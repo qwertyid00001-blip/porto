@@ -1,0 +1,107 @@
+---
+import { portfolioData } from '../data/portfolio';
+---
+
+<section id="services" class="py-20 md:py-32 relative border-t border-surface-border/60">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title in Lime -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-brand-lime font-mono text-xs font-bold uppercase tracking-widest block mb-2">
+        // PAKET LAYANAN
+      </span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-lime tracking-tight text-glow">
+        LAYANAN SAYA
+      </h2>
+      <p class="mt-4 text-surface-muted text-base sm:text-lg">
+        Pilihan paket jelas dengan ruang lingkup terukur untuk mempercepat bisnis Anda memiliki kehadiran online yang meyakinkan.
+      </p>
+    </div>
+
+    <!-- 3 Services Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {portfolioData.services.map((service) => {
+        const waMsg = `Halo Aan, saya tertarik dengan paket "${service.title}". Boleh minta informasi ketersediaan slot pengerjaan?`;
+        const waLink = `https://wa.me/${portfolioData.contact.whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
+
+        return (
+          <div class={`relative rounded-3xl bg-surface-card border ${service.badge ? 'border-brand-lime shadow-glow-lime' : 'border-surface-border'} p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1`}>
+            
+            {service.badge && (
+              <div class="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-brand-lime text-surface-bg text-[10px] font-black uppercase tracking-wider shadow-md">
+                {service.badge}
+              </div>
+            )}
+
+            <div>
+              <div class="text-xs font-mono font-bold text-brand-lime uppercase tracking-wider mb-2">
+                {service.subtitle}
+              </div>
+              <h3 class="text-xl sm:text-2xl font-extrabold text-white mb-3">
+                {service.title}
+              </h3>
+              <p class="text-xs text-surface-muted leading-relaxed mb-6">
+                {service.description}
+              </p>
+
+              <!-- Pricing & Timeline Bar -->
+              <div class="p-4 rounded-2xl bg-surface-card-subtle border border-surface-border mb-6">
+                <div class="text-lg font-black text-white font-mono mb-1">
+                  {service.priceStartingFrom}
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-brand-lime font-medium">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>Estimasi: {service.estimatedTime}</span>
+                </div>
+              </div>
+
+              <!-- Features Checklist -->
+              <div class="space-y-3 mb-6">
+                <span class="text-xs font-mono uppercase tracking-wider text-surface-muted font-bold block">
+                  Yang Anda Dapatkan:
+                </span>
+                {service.features.map((feature) => (
+                  <div class="flex items-start gap-2.5 text-xs text-slate-300">
+                    <div class="w-4 h-4 rounded-full bg-brand-lime/10 text-brand-lime flex items-center justify-center shrink-0 mt-0.5">
+                      ✓
+                    </div>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-surface-border">
+              <p class="text-[11px] text-surface-muted mb-4 italic">
+                Cocok untuk: {service.recommendedFor}
+              </p>
+
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-extrabold text-xs uppercase tracking-wider transition-all duration-200 ${
+                  service.badge
+                    ? 'bg-brand-lime hover:bg-brand-lime-light text-surface-bg shadow-glow-lime'
+                    : 'bg-surface-card-subtle hover:bg-surface-border text-white border border-surface-border'
+                }`}
+              >
+                <span>Pilih Paket Ini</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        );
+      })}
+    </div>
+
+  </div>
+</section>
+

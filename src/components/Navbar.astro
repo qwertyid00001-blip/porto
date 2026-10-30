@@ -1,0 +1,123 @@
+---
+import { portfolioData } from '../data/portfolio';
+---
+
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-surface-bg/80 border-b border-surface-border/60 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <!-- Brand Logo -->
+    <a href="/#" class="group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-lime rounded-lg p-1" aria-label="Beranda">
+      <div class="w-10 h-10 rounded-xl bg-surface-card border border-surface-border group-hover:border-brand-lime flex items-center justify-center transition-all duration-300 shadow-sm">
+        <span class="text-brand-lime font-black text-lg tracking-wider font-mono">⚡</span>
+      </div>
+      <div class="flex flex-col">
+        <span data-bind="name" class="font-extrabold text-base tracking-tight text-white group-hover:text-brand-lime transition-colors">
+          {portfolioData.personal.name}
+        </span>
+        <span class="text-xs text-surface-muted font-mono tracking-widest uppercase">
+          Dev / Studio
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Navigasi Utama">
+      <a href="/#projects" class="text-sm font-medium text-surface-muted hover:text-white transition-colors focus:outline-none focus:text-brand-lime">
+        Proyek
+      </a>
+      <a href="/#services" class="text-sm font-medium text-surface-muted hover:text-white transition-colors focus:outline-none focus:text-brand-lime">
+        Layanan
+      </a>
+      <a href="/#about" class="text-sm font-medium text-surface-muted hover:text-white transition-colors focus:outline-none focus:text-brand-lime">
+        Tentang & Proses
+      </a>
+      <a href="/#skills" class="text-sm font-medium text-surface-muted hover:text-white transition-colors focus:outline-none focus:text-brand-lime">
+        Keahlian
+      </a>
+    </nav>
+
+    <!-- Desktop CTA & Status -->
+    <div class="hidden sm:flex items-center gap-4">
+      <a
+        href="/#contact"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-bold text-sm transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] shadow-glow-lime focus:outline-none focus:ring-2 focus:ring-brand-lime focus:ring-offset-2 focus:ring-offset-surface-bg"
+      >
+        <span>Hubungi Saya</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <div class="flex items-center gap-2 sm:hidden">
+      <a
+        href="/#contact"
+        class="px-3.5 py-1.5 rounded-full bg-brand-lime text-surface-bg font-bold text-xs"
+      >
+        Kontak
+      </a>
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="p-2 rounded-lg bg-surface-card border border-surface-border text-surface-muted hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-lime"
+        aria-label="Buka Menu Navigasi"
+        aria-expanded="false"
+      >
+        <svg id="menu-icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden sm:hidden border-b border-surface-border bg-surface-card/95 backdrop-blur-xl px-6 py-6 transition-all duration-300">
+    <nav class="flex flex-col gap-4">
+      <a href="/#projects" class="mobile-nav-link text-base font-semibold text-surface-muted hover:text-brand-lime py-1">
+        Proyek Pilihan
+      </a>
+      <a href="/#services" class="mobile-nav-link text-base font-semibold text-surface-muted hover:text-brand-lime py-1">
+        Paket Layanan
+      </a>
+      <a href="/#about" class="mobile-nav-link text-base font-semibold text-surface-muted hover:text-brand-lime py-1">
+        Tentang & Proses Kerja
+      </a>
+      <a href="/#skills" class="mobile-nav-link text-base font-semibold text-surface-muted hover:text-brand-lime py-1">
+        Keahlian & Stack
+      </a>
+      <a href="/#contact" class="mobile-nav-link text-base font-semibold text-brand-lime py-1">
+        Hubungi Saya / Kontak WhatsApp
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  menuBtn?.addEventListener('click', () => {
+    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+    menu?.classList.toggle('hidden');
+    openIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      menu?.classList.add('hidden');
+      openIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      menuBtn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+

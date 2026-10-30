@@ -1,0 +1,146 @@
+---
+import { portfolioData } from '../data/portfolio';
+---
+
+<section id="projects" class="py-20 md:py-32 relative border-t border-surface-border/60">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Top Heading matching Inspiration -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div class="max-w-xl">
+        <span class="text-brand-lime font-mono text-xs font-bold uppercase tracking-widest block mb-2">
+          // BUKTI KEMAMPUAN
+        </span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight uppercase leading-tight">
+          KARYA TERBAIK <br />
+          <span class="text-brand-lime text-glow">YANG SAYA BANGUN</span>
+        </h2>
+        <p class="mt-4 text-surface-muted text-sm sm:text-base leading-relaxed">
+          Dilabeli secara jujur sebagai proyek personal & konsep untuk menguji standar teknis, kecepatan muat, dan pengalaman konversi pelanggan.
+        </p>
+      </div>
+
+      <div>
+        <a
+          href={portfolioData.contact.github}
+          data-bind="github"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-extrabold text-xs uppercase tracking-wider transition-all duration-300 transform hover:scale-105 shadow-glow-lime"
+        >
+          <span>Eksplor Repositori GitHub</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {portfolioData.projects.map((project) => (
+        <article class="group rounded-3xl bg-surface-card border border-surface-border hover:border-brand-lime/60 transition-all duration-300 flex flex-col overflow-hidden shadow-lg hover:-translate-y-2">
+          
+          <!-- Image Mockup Container -->
+          <div class="relative h-56 w-full overflow-hidden bg-surface-card-subtle">
+            <img
+              src={project.coverImage}
+              alt={`Tangkapan layar ${project.title}`}
+              loading="lazy"
+              class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            />
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent opacity-80"></div>
+            
+            <!-- Honest Badge -->
+            <div class="absolute top-4 left-4">
+              <span class="px-3 py-1 rounded-full bg-surface-bg/90 backdrop-blur-md border border-brand-lime/40 text-brand-lime font-mono text-[10px] font-bold uppercase tracking-wider">
+                {project.badge}
+              </span>
+            </div>
+
+            <div class="absolute top-4 right-4">
+              <span class="px-2.5 py-1 rounded-full bg-surface-card/80 backdrop-blur-md text-surface-muted text-[10px] font-mono">
+                {project.duration}
+              </span>
+            </div>
+          </div>
+
+          <!-- Card Content Body -->
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-mono text-brand-lime uppercase tracking-wider font-semibold mb-1">
+                {project.category}
+              </div>
+              <h3 class="text-xl font-extrabold text-white mb-2 group-hover:text-brand-lime transition-colors">
+                {project.title}
+              </h3>
+              
+              <p class="text-xs text-surface-muted leading-relaxed mb-4 line-clamp-3">
+                <strong class="text-slate-300">Masalah:</strong> {project.problem}
+              </p>
+
+              <!-- Tech Stack Pills -->
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                {project.technologies.map((tech) => (
+                  <span class="px-2.5 py-1 rounded-md bg-surface-card-subtle border border-surface-border text-[10px] font-mono text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Action Buttons Footer -->
+            <div class="pt-4 border-t border-surface-border flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-3">
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-bold text-white hover:text-brand-lime flex items-center gap-1 transition-colors"
+                  aria-label={`Demo live untuk ${project.title}`}
+                >
+                  <span>Demo</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                  </svg>
+                </a>
+
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-bold text-surface-muted hover:text-white flex items-center gap-1 transition-colors"
+                  aria-label={`Kode sumber GitHub untuk ${project.title}`}
+                >
+                  <span>GitHub</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m10 15 5-3-5-3v6Z"></path>
+                  </svg>
+                </a>
+              </div>
+
+              {project.hasCaseStudy && (
+                <a
+                  href={`/projects/${project.slug}`}
+                  class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-lime hover:underline"
+                >
+                  <span>Studi Kasus</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </a>
+              )}
+            </div>
+
+          </div>
+
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+

@@ -1,0 +1,889 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { portfolioData } from '../data/portfolio';
+---
+
+<Layout title="Pengaturan Portofolio & Kelola Karya — Akses Rahasia">
+  <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
+    
+    <!-- Screen 1: Secret Gate (Shown by default) -->
+    <div id="gate-screen" class="max-w-md w-full mx-auto">
+      <div class="p-8 sm:p-10 rounded-3xl bg-surface-card border border-surface-border shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-lime/10 rounded-full blur-2xl"></div>
+
+        <div class="text-center mb-8">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-surface-card-subtle border border-surface-border flex items-center justify-center text-3xl mb-4">
+            🔒
+          </div>
+          <span class="text-xs font-mono font-bold text-brand-lime uppercase tracking-widest block mb-1">
+            AKSES TERBATAS
+          </span>
+          <h1 class="text-2xl font-black text-white tracking-tight">
+            Panel Pengaturan
+          </h1>
+          <p class="text-xs text-surface-muted mt-2 leading-relaxed">
+            Masukkan kunci keamanan rahasia Anda untuk mengubah link GitHub, email, WhatsApp, serta menambah foto hasil pembuatan.
+          </p>
+        </div>
+
+        <form id="gate-form" class="space-y-4">
+          <div>
+            <label for="secret-key" class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-2">
+              Kunci Rahasia (Master Key)
+            </label>
+            <div class="relative">
+              <input
+                type="password"
+                id="secret-key"
+                required
+                placeholder="Masukkan kunci..."
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime focus:ring-1 focus:ring-brand-lime transition-all"
+              />
+              <button
+                type="button"
+                id="toggle-pwd-btn"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-surface-muted hover:text-white text-xs font-mono px-1 py-0.5"
+              >
+                Lihat
+              </button>
+            </div>
+            <p class="text-[11px] text-surface-muted mt-2">
+              *Kunci bawaan: <code class="text-brand-lime font-mono">aan-secret-2026</code> (bisa diubah di dalam).
+            </p>
+          </div>
+
+          <div id="gate-error" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs text-center font-medium">
+            Kunci rahasia salah. Silakan coba lagi.
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3.5 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-glow-lime transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Buka Pengaturan ⚡
+          </button>
+        </form>
+
+        <div class="mt-6 pt-6 border-t border-surface-border text-center">
+          <a href="/" class="text-xs text-surface-muted hover:text-brand-lime transition-colors">
+            ← Kembali ke Beranda
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Admin Dashboard (Hidden until key verified) -->
+    <div id="dashboard-screen" class="hidden max-w-5xl w-full mx-auto">
+      
+      <!-- Top Action Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 bg-surface-card p-6 rounded-3xl border border-surface-border">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-lime/10 border border-brand-lime/30 flex items-center justify-center text-brand-lime text-xl">
+            ⚙️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg font-black text-white">Panel Pengaturan & Karya</h2>
+              <span class="px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 font-mono text-[10px] font-bold">
+                KUNCI AKTIF
+              </span>
+            </div>
+            <p class="text-xs text-surface-muted">Kelola kontak, identitas, dan foto proyek hasil pembuatan Anda</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="/"
+            target="_blank"
+            class="px-4 py-2 rounded-full bg-surface-card-subtle hover:bg-surface-border text-white text-xs font-bold border border-surface-border transition-colors flex items-center gap-1.5"
+          >
+            <span>Lihat Website</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+            </svg>
+          </a>
+          <button
+            type="button"
+            id="lock-btn"
+            class="px-4 py-2 rounded-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold transition-colors"
+          >
+            Kunci & Keluar 🔒
+          </button>
+        </div>
+      </div>
+
+      <!-- Settings Form -->
+      <form id="settings-form" class="space-y-8">
+        
+        <!-- Card 1: Links & Contacts -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <div class="flex items-center gap-2 mb-6 pb-4 border-b border-surface-border">
+            <span class="text-brand-lime font-mono text-sm">01.</span>
+            <h3 class="text-base font-bold text-white uppercase tracking-wider">
+              Alamat Web, Kontak & Media Sosial
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="cfg-github" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Alamat Repositori GitHub
+              </label>
+              <input
+                type="url"
+                id="cfg-github"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+              <span class="text-[11px] text-surface-muted mt-1 block">Contoh: https://github.com/username</span>
+            </div>
+
+            <div>
+              <label for="cfg-linkedin" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Alamat Profil LinkedIn
+              </label>
+              <input
+                type="url"
+                id="cfg-linkedin"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+              <span class="text-[11px] text-surface-muted mt-1 block">Contoh: https://linkedin.com/in/username</span>
+            </div>
+
+            <div>
+              <label for="cfg-email" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Alamat Email Kontak
+              </label>
+              <input
+                type="email"
+                id="cfg-email"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+              <span class="text-[11px] text-surface-muted mt-1 block">Contoh: nama.dev@gmail.com</span>
+            </div>
+
+            <div>
+              <label for="cfg-wa" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Nomor WhatsApp (Format Internasional)
+              </label>
+              <input
+                type="text"
+                id="cfg-wa"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+              <span class="text-[11px] text-surface-muted mt-1 block">Awali dengan 62 tanpa spasi/simbol (misal: 6281234567890)</span>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="cfg-wa-msg" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Teks Pesan Otomatis WhatsApp (Prefilled Message)
+              </label>
+              <textarea
+                id="cfg-wa-msg"
+                rows="2"
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime resize-none"
+              ></textarea>
+              <span class="text-[11px] text-surface-muted mt-1 block">Pesan pembuka saat calon klien menekan tombol WhatsApp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Identity & Availability -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <div class="flex items-center gap-2 mb-6 pb-4 border-b border-surface-border">
+            <span class="text-brand-lime font-mono text-sm">02.</span>
+            <h3 class="text-base font-bold text-white uppercase tracking-wider">
+              Identitas & Ketersediaan
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="cfg-name" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Nama Tampilan
+              </label>
+              <input
+                type="text"
+                id="cfg-name"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+            </div>
+
+            <div>
+              <label for="cfg-availability" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Status Ketersediaan
+              </label>
+              <input
+                type="text"
+                id="cfg-availability"
+                required
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+              />
+              <span class="text-[11px] text-surface-muted mt-1 block">Misal: Menerima Proyek Baru, Slot Penuh, dll.</span>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="cfg-headline" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                Headline Hero
+              </label>
+              <textarea
+                id="cfg-headline"
+                rows="2"
+                class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime resize-none"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Security & Change Key -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <div class="flex items-center gap-2 mb-6 pb-4 border-b border-surface-border">
+            <span class="text-brand-lime font-mono text-sm">03.</span>
+            <h3 class="text-base font-bold text-white uppercase tracking-wider">
+              Ubah Kunci Rahasia Anda
+            </h3>
+          </div>
+
+          <div class="max-w-md">
+            <label for="cfg-new-key" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+              Kunci Rahasia Baru (Kosongkan jika tidak ingin mengubah)
+            </label>
+            <input
+              type="text"
+              id="cfg-new-key"
+              placeholder="Masukkan kunci baru..."
+              class="w-full px-4 py-3 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+            />
+            <span class="text-[11px] text-surface-muted mt-1 block">Kunci ini digunakan untuk membuka panel admin berikutnya.</span>
+          </div>
+        </div>
+
+        <!-- Card 4: KELOLA KARYA & FOTO HASIL PEMBUATAN -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-card border border-surface-border">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-surface-border">
+            <div class="flex items-center gap-2">
+              <span class="text-brand-lime font-mono text-sm">04.</span>
+              <h3 class="text-base font-bold text-white uppercase tracking-wider">
+                Kelola Karya & Foto Hasil Pembuatan
+              </h3>
+            </div>
+            <span class="text-xs text-brand-lime font-mono">
+              Foto langsung tampil di Beranda
+            </span>
+          </div>
+
+          <!-- Existing Projects List Preview -->
+          <div class="mb-8">
+            <span class="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-4">
+              Daftar Proyek Aktif Saat Ini:
+            </span>
+            <div id="projects-manage-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Dynamically populated by script -->
+            </div>
+          </div>
+
+          <!-- Form Tambah Proyek Baru dengan Upload Foto -->
+          <div class="p-6 rounded-2xl bg-surface-card-subtle border border-surface-border/80">
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+              <span class="text-brand-lime">+</span>
+              <span>Tambah Foto & Proyek Baru</span>
+            </h4>
+
+            <div class="space-y-5">
+              
+              <!-- Foto Upload Area -->
+              <div>
+                <label class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">
+                  Foto Mockup / Hasil Pembuatan *
+                </label>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
+                  
+                  <!-- File Drag / Select Box (8 cols) -->
+                  <div class="sm:col-span-8">
+                    <input
+                      type="file"
+                      id="new-prj-file"
+                      accept="image/*"
+                      class="hidden"
+                    />
+                    <div
+                      id="drop-zone"
+                      class="p-6 border-2 border-dashed border-surface-border hover:border-brand-lime rounded-2xl text-center cursor-pointer transition-colors bg-surface-bg/50 group"
+                    >
+                      <div class="text-3xl mb-2 group-hover:scale-110 transition-transform">📸</div>
+                      <p class="text-xs font-bold text-white">Klik untuk memilih foto dari perangkat Anda</p>
+                      <p class="text-[11px] text-surface-muted mt-1">Mendukung JPG, PNG, WebP (Otomatis dioptimasi)</p>
+                    </div>
+
+                    <div class="mt-3">
+                      <span class="text-[11px] text-surface-muted block mb-1">Atau masukkan URL Foto langsung:</span>
+                      <input
+                        type="url"
+                        id="new-prj-image-url"
+                        placeholder="https://images.unsplash.com/..."
+                        class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-xs focus:outline-none focus:border-brand-lime"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Preview Thumbnail (4 cols) -->
+                  <div class="sm:col-span-4">
+                    <div class="h-40 rounded-2xl bg-surface-bg border border-surface-border flex items-center justify-center overflow-hidden relative group">
+                      <img
+                        id="new-prj-preview"
+                        src=""
+                        alt="Preview Foto"
+                        class="hidden w-full h-full object-cover"
+                      />
+                      <span id="preview-placeholder" class="text-xs text-surface-muted text-center px-2">
+                        Preview foto akan muncul di sini
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Metadata Proyek -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="new-prj-title" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Judul Proyek *
+                  </label>
+                  <input
+                    type="text"
+                    id="new-prj-title"
+                    placeholder="Misal: Kedai Kopi Artisan"
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+
+                <div>
+                  <label for="new-prj-category" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Kategori Proyek *
+                  </label>
+                  <input
+                    type="text"
+                    id="new-prj-category"
+                    placeholder="Misal: Landing Page F&B, Company Profile"
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+
+                <div>
+                  <label for="new-prj-badge" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Label Status *
+                  </label>
+                  <select
+                    id="new-prj-badge"
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  >
+                    <option value="Proyek Klien">Proyek Klien</option>
+                    <option value="Proyek Konsep">Proyek Konsep</option>
+                    <option value="Proyek Pribadi">Proyek Pribadi</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="new-prj-duration" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Durasi Pengerjaan
+                  </label>
+                  <input
+                    type="text"
+                    id="new-prj-duration"
+                    placeholder="Misal: 1 Minggu"
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label for="new-prj-problem" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Deskripsi Masalah & Solusi *
+                  </label>
+                  <textarea
+                    id="new-prj-problem"
+                    rows="2"
+                    placeholder="Jelaskan kebutuhan klien atau masalah yang dipecahkan oleh website ini..."
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime resize-none"
+                  ></textarea>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label for="new-prj-tech" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Teknologi yang Digunakan (Pisahkan dengan koma)
+                  </label>
+                  <input
+                    type="text"
+                    id="new-prj-tech"
+                    placeholder="Astro, Tailwind CSS, TypeScript, WhatsApp API"
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+
+                <div>
+                  <label for="new-prj-live" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Tautan Demo Live (Opsional)
+                  </label>
+                  <input
+                    type="url"
+                    id="new-prj-live"
+                    placeholder="https://..."
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+
+                <div>
+                  <label for="new-prj-github" class="block text-xs font-mono font-bold uppercase text-slate-300 mb-1">
+                    Tautan Repositori GitHub (Opsional)
+                  </label>
+                  <input
+                    type="url"
+                    id="new-prj-github"
+                    placeholder="https://github.com/..."
+                    class="w-full px-4 py-2.5 rounded-xl bg-surface-bg border border-surface-border text-white text-sm focus:outline-none focus:border-brand-lime"
+                  />
+                </div>
+              </div>
+
+              <!-- Button Tambah -->
+              <div class="pt-2">
+                <button
+                  type="button"
+                  id="add-project-btn"
+                  class="w-full sm:w-auto px-6 py-3 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-extrabold text-xs uppercase tracking-wider transition-all duration-200 shadow-glow-lime"
+                >
+                  + Tambahkan Proyek Ini ke Portofolio
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Feedback Banner -->
+        <div id="save-status" class="hidden p-4 rounded-2xl text-center text-xs font-bold"></div>
+
+        <!-- Action Bar -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+          <button
+            type="button"
+            id="reset-btn"
+            class="text-xs text-red-400 hover:text-red-300 underline font-semibold"
+          >
+            Reset Semua Pengaturan & Proyek ke Bawaan
+          </button>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              id="export-code-btn"
+              class="px-5 py-3 rounded-full bg-surface-card border border-surface-border hover:border-brand-lime text-white font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              📋 Salin Kode `portfolio.ts`
+            </button>
+
+            <button
+              type="submit"
+              class="px-7 py-3 rounded-full bg-brand-lime hover:bg-brand-lime-light text-surface-bg font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-glow-lime transform hover:scale-105 active:scale-95"
+            >
+              Simpan & Terapkan Langsung ⚡
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</Layout>
+
+<script is:inline define:vars={{ initialData: portfolioData }}>
+  const DEFAULT_KEY = 'aan-secret-2026';
+  const STORAGE_KEY_AUTH = 'porto_admin_secret_key';
+  const STORAGE_KEY_CONFIG = 'porto_custom_config';
+  const STORAGE_KEY_PROJECTS = 'porto_custom_projects';
+
+  const gateScreen = document.getElementById('gate-screen');
+  const gateForm = document.getElementById('gate-form');
+  const secretKeyInput = document.getElementById('secret-key');
+  const togglePwdBtn = document.getElementById('toggle-pwd-btn');
+  const gateError = document.getElementById('gate-error');
+
+  const dashboardScreen = document.getElementById('dashboard-screen');
+  const settingsForm = document.getElementById('settings-form');
+  const lockBtn = document.getElementById('lock-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const exportCodeBtn = document.getElementById('export-code-btn');
+  const saveStatus = document.getElementById('save-status');
+
+  // Input fields profil
+  const inputGithub = document.getElementById('cfg-github');
+  const inputLinkedin = document.getElementById('cfg-linkedin');
+  const inputEmail = document.getElementById('cfg-email');
+  const inputWa = document.getElementById('cfg-wa');
+  const inputWaMsg = document.getElementById('cfg-wa-msg');
+  const inputName = document.getElementById('cfg-name');
+  const inputAvailability = document.getElementById('cfg-availability');
+  const inputHeadline = document.getElementById('cfg-headline');
+  const inputNewKey = document.getElementById('cfg-new-key');
+
+  // Project management fields
+  const projectsManageList = document.getElementById('projects-manage-list');
+  const dropZone = document.getElementById('drop-zone');
+  const prjFileInput = document.getElementById('new-prj-file');
+  const prjImageUrlInput = document.getElementById('new-prj-image-url');
+  const prjPreview = document.getElementById('new-prj-preview');
+  const previewPlaceholder = document.getElementById('preview-placeholder');
+  const addProjectBtn = document.getElementById('add-project-btn');
+
+  let activeImageData = '';
+  let activeProjects = [];
+
+  function getMasterKey() {
+    return localStorage.getItem(STORAGE_KEY_AUTH) || DEFAULT_KEY;
+  }
+
+  function getCurrentConfig() {
+    const raw = localStorage.getItem(STORAGE_KEY_CONFIG);
+    if (raw) {
+      try {
+        return { ...getDefaultConfig(), ...JSON.parse(raw) };
+      } catch (e) {}
+    }
+    return getDefaultConfig();
+  }
+
+  function getDefaultConfig() {
+    return {
+      github: initialData.contact.github,
+      linkedin: initialData.contact.linkedin,
+      email: initialData.contact.email,
+      whatsappNumber: initialData.contact.whatsappNumber,
+      whatsappPrefilledMessage: initialData.contact.whatsappPrefilledMessage,
+      name: initialData.personal.name,
+      availability: initialData.personal.availability,
+      headline: initialData.personal.headline + ' ' + initialData.personal.subheadline,
+    };
+  }
+
+  function getProjectsList() {
+    const raw = localStorage.getItem(STORAGE_KEY_PROJECTS);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {}
+    }
+    return [...initialData.projects];
+  }
+
+  function renderProjectsManager() {
+    if (!projectsManageList) return;
+    activeProjects = getProjectsList();
+
+    projectsManageList.innerHTML = activeProjects.map((p, idx) => `
+      <div class="p-3.5 rounded-2xl bg-surface-bg border border-surface-border flex flex-col justify-between">
+        <div>
+          <div class="h-28 rounded-xl overflow-hidden bg-surface-card mb-2.5 relative">
+            <img src="${p.coverImage}" alt="${p.title}" class="w-full h-full object-cover" />
+            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-surface-bg/90 text-brand-lime font-mono text-[9px] font-bold">
+              ${p.badge}
+            </span>
+          </div>
+          <h5 class="text-xs font-bold text-white leading-tight mb-1">${p.title}</h5>
+          <span class="text-[10px] text-surface-muted block mb-2">${p.category}</span>
+        </div>
+        <div class="pt-2 border-t border-surface-border/60 flex items-center justify-between">
+          <span class="text-[10px] font-mono text-surface-muted">${p.technologies ? (Array.isArray(p.technologies) ? p.technologies.slice(0, 2).join(', ') : p.technologies) : ''}</span>
+          <button
+            type="button"
+            data-delete-idx="${idx}"
+            class="delete-prj-btn text-[11px] font-bold text-red-400 hover:text-red-300 transition-colors"
+          >
+            Hapus ✕
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach delete listeners
+    document.querySelectorAll('.delete-prj-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.getAttribute('data-delete-idx') || '-1', 10);
+        if (idx >= 0 && confirm(`Hapus proyek "${activeProjects[idx].title}"?`)) {
+          activeProjects.splice(idx, 1);
+          localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(activeProjects));
+          renderProjectsManager();
+        }
+      });
+    });
+  }
+
+  // Handle Photo Picker & Compression
+  dropZone?.addEventListener('click', () => prjFileInput?.click());
+
+  prjFileInput?.addEventListener('change', (e) => {
+    const file = prjFileInput.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        // Resize/compress to max 1200px width with canvas
+        const canvas = document.createElement('canvas');
+        const maxW = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxW) {
+          height = Math.round((height * maxW) / width);
+          width = maxW;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+
+        activeImageData = canvas.toDataURL('image/jpeg', 0.85);
+        if (prjPreview) {
+          prjPreview.src = activeImageData;
+          prjPreview.classList.remove('hidden');
+        }
+        previewPlaceholder?.classList.add('hidden');
+      };
+      img.src = event.target?.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  prjImageUrlInput?.addEventListener('input', (e) => {
+    const url = prjImageUrlInput.value.trim();
+    if (url) {
+      activeImageData = url;
+      if (prjPreview) {
+        prjPreview.src = url;
+        prjPreview.classList.remove('hidden');
+      }
+      previewPlaceholder?.classList.add('hidden');
+    }
+  });
+
+  // Add Project Action
+  addProjectBtn?.addEventListener('click', () => {
+    const title = (document.getElementById('new-prj-title')).value.trim();
+    const category = (document.getElementById('new-prj-category')).value.trim();
+    const badge = (document.getElementById('new-prj-badge')).value;
+    const duration = (document.getElementById('new-prj-duration')).value.trim() || '2 Minggu';
+    const problem = (document.getElementById('new-prj-problem')).value.trim();
+    const tech = (document.getElementById('new-prj-tech')).value.trim();
+    const live = (document.getElementById('new-prj-live')).value.trim();
+    const github = (document.getElementById('new-prj-github')).value.trim();
+
+    if (!title) {
+      alert('Mohon isi judul proyek.');
+      return;
+    }
+    if (!activeImageData) {
+      alert('Mohon pilih foto hasil pembuatan proyek atau masukkan URL foto.');
+      return;
+    }
+
+    const newProject = {
+      slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      title: title,
+      category: category || 'Web Development',
+      badge: badge,
+      role: 'Desain & Development',
+      duration: duration,
+      coverImage: activeImageData,
+      problem: problem || 'Membangun solusi website modern berkecepatan tinggi.',
+      summary: problem || 'Membangun solusi website modern berkecepatan tinggi.',
+      technologies: tech ? tech.split(',').map(s => s.trim()).filter(Boolean) : ['Astro', 'Tailwind CSS'],
+      liveUrl: live || '#',
+      githubUrl: github || '#',
+      featured: true,
+      hasCaseStudy: false
+    };
+
+    activeProjects.unshift(newProject);
+    localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(activeProjects));
+    renderProjectsManager();
+
+    // Clear Inputs
+    (document.getElementById('new-prj-title')).value = '';
+    (document.getElementById('new-prj-category')).value = '';
+    (document.getElementById('new-prj-duration')).value = '';
+    (document.getElementById('new-prj-problem')).value = '';
+    (document.getElementById('new-prj-tech')).value = '';
+    (document.getElementById('new-prj-live')).value = '';
+    (document.getElementById('new-prj-github')).value = '';
+    if (prjImageUrlInput) prjImageUrlInput.value = '';
+    if (prjPreview) {
+      prjPreview.src = '';
+      prjPreview.classList.add('hidden');
+    }
+    previewPlaceholder?.classList.remove('hidden');
+    activeImageData = '';
+
+    alert(`✓ Proyek "${title}" beserta foto berhasil ditambahkan! Foto langsung muncul di beranda utama.`);
+  });
+
+  function populateForm() {
+    const config = getCurrentConfig();
+    inputGithub.value = config.github;
+    inputLinkedin.value = config.linkedin;
+    inputEmail.value = config.email;
+    inputWa.value = config.whatsappNumber;
+    inputWaMsg.value = config.whatsappPrefilledMessage;
+    inputName.value = config.name;
+    inputAvailability.value = config.availability;
+    inputHeadline.value = config.headline;
+    inputNewKey.value = '';
+    renderProjectsManager();
+  }
+
+  function unlock() {
+    gateScreen.classList.add('hidden');
+    dashboardScreen.classList.remove('hidden');
+    populateForm();
+  }
+
+  function lock() {
+    sessionStorage.removeItem('porto_admin_unlocked');
+    dashboardScreen.classList.add('hidden');
+    gateScreen.classList.remove('hidden');
+    secretKeyInput.value = '';
+  }
+
+  // Toggle password visibility
+  togglePwdBtn?.addEventListener('click', () => {
+    if (secretKeyInput.type === 'password') {
+      secretKeyInput.type = 'text';
+      togglePwdBtn.textContent = 'Tutup';
+    } else {
+      secretKeyInput.type = 'password';
+      togglePwdBtn.textContent = 'Lihat';
+    }
+  });
+
+  // Check if already unlocked in this session
+  if (sessionStorage.getItem('porto_admin_unlocked') === 'true') {
+    unlock();
+  }
+
+  // Gate Form submit
+  gateForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const entered = secretKeyInput.value.trim();
+    if (entered === getMasterKey()) {
+      sessionStorage.setItem('porto_admin_unlocked', 'true');
+      gateError?.classList.add('hidden');
+      unlock();
+    } else {
+      gateError?.classList.remove('hidden');
+    }
+  });
+
+  // Lock button
+  lockBtn?.addEventListener('click', lock);
+
+  // Save Settings
+  settingsForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const updatedConfig = {
+      github: inputGithub.value.trim(),
+      linkedin: inputLinkedin.value.trim(),
+      email: inputEmail.value.trim(),
+      whatsappNumber: inputWa.value.trim().replace(/[^0-9]/g, ''),
+      whatsappPrefilledMessage: inputWaMsg.value.trim(),
+      name: inputName.value.trim(),
+      availability: inputAvailability.value.trim(),
+      headline: inputHeadline.value.trim(),
+    };
+
+    localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(updatedConfig));
+
+    // Update master key if filled
+    const newKey = inputNewKey.value.trim();
+    if (newKey) {
+      localStorage.setItem(STORAGE_KEY_AUTH, newKey);
+      inputNewKey.value = '';
+    }
+
+    if (saveStatus) {
+      saveStatus.className = 'p-4 rounded-2xl text-center text-xs font-bold bg-green-500/10 border border-green-500/30 text-green-400 block';
+      saveStatus.textContent = '✓ Pengaturan & seluruh data karya berhasil disimpan dan aktif di website!';
+      setTimeout(() => {
+        saveStatus.classList.add('hidden');
+      }, 4000);
+    }
+  });
+
+  // Reset to default
+  resetBtn?.addEventListener('click', () => {
+    if (confirm('Apakah Anda yakin ingin menghapus semua perubahan (kontak & karya yang ditambahkan) dan mengembalikan ke pengaturan default?')) {
+      localStorage.removeItem(STORAGE_KEY_CONFIG);
+      localStorage.removeItem(STORAGE_KEY_PROJECTS);
+      populateForm();
+      if (saveStatus) {
+        saveStatus.className = 'p-4 rounded-2xl text-center text-xs font-bold bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 block';
+        saveStatus.textContent = 'Pengaturan & karya telah dikembalikan ke bawaan sistem.';
+        setTimeout(() => {
+          saveStatus.classList.add('hidden');
+        }, 3000);
+      }
+    }
+  });
+
+  // Export full portfolio.ts code
+  exportCodeBtn?.addEventListener('click', () => {
+    const config = getCurrentConfig();
+    const projects = getProjectsList();
+
+    const codeSnippet = `// File: src/data/portfolio.ts
+// Diperbarui via Admin Panel
+
+export const portfolioData = {
+  personal: {
+    name: '${config.name}',
+    role: 'Web Developer',
+    headline: '${config.headline}',
+    subheadline: '',
+    availability: '${config.availability}',
+    location: 'Indonesia',
+    bio: [
+      'Saya adalah web developer independen yang berfokus membangun website modern dengan performa tinggi dan desain tajam.',
+      'Bagi saya, website bukan sekadar estetika, melainkan instrumen bisnis untuk memvalidasi brand, meyakinkan calon pelanggan dalam hitungan detik, dan mengalirkan pesan masuk berkualitas.',
+      'Tanpa birokrasi rumit: komunikasi langsung, transparansi jadwal, dan kode bersih yang siap berkembang bersama bisnis Anda.'
+    ],
+    avatarUrl: '/images/avatar.jpg',
+  },
+  contact: {
+    whatsappNumber: '${config.whatsappNumber}',
+    whatsappPrefilledMessage: '${config.whatsappPrefilledMessage}',
+    email: '${config.email}',
+    github: '${config.github}',
+    linkedin: '${config.linkedin}',
+  },
+  projects: ${JSON.stringify(projects, null, 2)}
+};`;
+
+    navigator.clipboard.writeText(codeSnippet).then(() => {
+      alert('✓ Kode konfigurasi & daftar proyek berhasil disalin! Anda bisa langsung menempelkannya ke src/data/portfolio.ts.');
+    }).catch(() => {
+      prompt('Salin kode konfigurasi di bawah:', codeSnippet);
+    });
+  });
+</script>
